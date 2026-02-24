@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TuBelleza – Peluquería</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<header>
+  <div class="grain"></div>
+  <div class="hero-content">
+    <div class="hero-badge">✦ Peluquería &amp; Estética ✦</div>
+    <h1 class="hero-title">Tu<em>Belleza</em></h1>
+    <p class="hero-sub">Donde cada detalle realza tu esencia</p>
+    <div class="hero-buttons">
+      <button class="btn btn-primary" onclick="openModal('modalRegistro')">✦ Registrar turno</button>
+      <button class="btn btn-outline" onclick="openModal('modalCalendario')">Ver turnos agendados</button>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M12 5v14M5 12l7 7 7-7"/>
+    </svg>
+  </div>
+</header>
+
+<!-- ── SECCIÓN INFO ── -->
+<section style="padding:5rem 2rem; max-width:900px; margin:0 auto; text-align:center;">
+  <p style="font-family:'Playfair Display',serif; font-size:clamp(1.4rem,3vw,2rem); color:var(--mid); line-height:1.5;">
+    "Más que un corte de pelo,<br><em>una experiencia que te transforma.</em>"
+  </p>
+  <p style="margin-top:1.5rem; font-size:.95rem; color:var(--light-mid); max-width:500px; margin-left:auto; margin-right:auto;">
+    Reservá tu turno en línea y llegá relajada. Te esperamos con atención personalizada y los mejores tratamientos del mercado.
+  </p>
+  <div style="margin-top:2.5rem; display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+    <button class="btn btn-primary" onclick="openModal('modalRegistro')">Reservar ahora</button>
+    <button class="btn btn-outline" style="color:var(--dark);border-color:#c8b8aa;" onclick="openModal('modalCalendario')">Ver agenda</button>
+  </div>
+</section>
+
+<!-- ── MODAL REGISTRO DE TURNO ── -->
+<div class="modal-overlay" id="modalRegistro">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modalRegistro')">×</button>
+    <h2 class="modal-title">Registrar turno</h2>
+    <p class="modal-sub">Completá tus datos y elegí el tratamiento</p>
+
+    <form id="formTurno" onsubmit="guardarTurno(event)">
+      <input type="hidden" id="editId" value=""/>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nombre</label>
+          <input type="text" id="nombre" placeholder="Ej: María" required/>
+        </div>
+        <div class="form-group">
+          <label>Apellido</label>
+          <input type="text" id="apellido" placeholder="Ej: García" required/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Tipo de tratamiento</label>
+        <select id="tratamiento" required>
+          <option value="">— Seleccioná un tratamiento —</option>
+          <option>Corte de cabello</option>
+          <option>Coloración completa</option>
+          <option>Mechas / highlights</option>
+          <option>Keratina</option>
+          <option>Tratamiento hidratante</option>
+          <option>Peinado</option>
+          <option>Manicura</option>
+          <option>Depilación</option>
+          <option>Maquillaje</option>
+          <option>Otro</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Fecha</label>
+          <input type="date" id="fecha" required/>
+        </div>
+        <div class="form-group">
+          <label>Hora</label>
+          <input type="time" id="hora" required min="08:00" max="20:00"/>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit" id="btnSubmitLabel">Confirmar turno</button>
+    </form>
+  </div>
+</div>
+
+<!-- ── MODAL CALENDARIO SEMANAL ── -->
+<div class="modal-overlay" id="modalCalendario">
+  <div class="modal wide">
+    <button class="modal-close" onclick="closeModal('modalCalendario')">×</button>
+    <h2 class="modal-title">Agenda semanal</h2>
+
+    <div class="week-nav">
+      <div class="week-nav-btns">
+        <button onclick="cambiarSemana(-1)">&#8592; Anterior</button>
+        <button class="btn-hoy" onclick="irHoy()">Hoy</button>
+        <button onclick="cambiarSemana(1)">Siguiente &#8594;</button>
+      </div>
+      <span id="weekLabel" class="week-label"></span>
+      <span id="weekCount" style="font-size:.8rem; color:var(--light-mid);"></span>
+    </div>
+
+    <!-- Cuadrícula 7 días -->
+    <div class="week-grid" id="weekGrid"></div>
+
+    <!-- Detalle del día seleccionado -->
+    <div id="detalleDia" style="max-height:270px; overflow-y:auto; padding-right:.2rem;"></div>
+  </div>
+</div>
+
+<!-- Toast de notificaciones -->
+<div id="toast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
